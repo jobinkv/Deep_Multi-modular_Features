@@ -251,19 +251,19 @@ def main(train_args):
         ])
         val_input_transform = standard_transforms.Compose([
             extended_transforms.multiscaleImg(train_args['input_size'],[100,40,80,160]),
-            standard_transforms.Resize((train_args['input_size'], train_args['input_size']), interpolation=Image.ANTIALIAS),
+            standard_transforms.Resize((train_args['input_size'], train_args['input_size']), interpolation=Image.Resampling.LANCZOS),
             standard_transforms.ToTensor(),
             standard_transforms.Normalize(*mean_std)
         ])
     else:
         train_input_transform = standard_transforms.Compose([
-            standard_transforms.Resize((train_args['input_size'], train_args['input_size']), interpolation=Image.ANTIALIAS),
+            standard_transforms.Resize((train_args['input_size'], train_args['input_size']), interpolation=Image.Resampling.LANCZOS),
             extended_transforms.RandomGaussianBlur(),
             standard_transforms.ToTensor(),
             standard_transforms.Normalize(*mean_std)
         ])
         val_input_transform = standard_transforms.Compose([
-            standard_transforms.Resize((train_args['input_size'], train_args['input_size']), interpolation=Image.ANTIALIAS),
+            standard_transforms.Resize((train_args['input_size'], train_args['input_size']), interpolation=Image.Resampling.LANCZOS),
             standard_transforms.ToTensor(),
             standard_transforms.Normalize(*mean_std)
         ])
@@ -517,161 +517,6 @@ def final_evaluate(data_loader, net, criterion,train_args):
     mean_acc = confusion_matrix.diag().sum()/confusion_matrix.sum()
     sep_acc.append(mean_acc.numpy())
     return  test_loss.avg, mean_acc.numpy(), sep_acc
-'''
-def img_average(im):
-    im_grey = im.convert('LA') # convert to grayscale
-    width, height = im.size
-    total = 0
-    for i in range(0, width):
-        for j in range(0, height):
-            total += im_grey.getpixel((i,j))[0]
-    mean = total / (width * height)
-    #print(mean)
-    return mean
-    
 
-mean_std =([0.9584, 0.9588, 0.9586], [0.1246, 0.1223, 0.1224])
-imgsize = 384
-scrip_multiscale = extended_transforms.multiscaleImg(imgsize,[100,40,80,160])
-if 1==1:
-    if args['dataset'] == 'script':
-        transform_test = standard_transforms.Compose([
-            extended_transforms.multiscaleImg(imgsize,[100,40,80,160]),
-            standard_transforms.Resize((imgsize, imgsize), interpolation=Image.ANTIALIAS),
-            standard_transforms.ToTensor(),
-            standard_transforms.Normalize(*mean_std)
-        ])
-        print ('I am string')
-    else:
-        transform_test = standard_transforms.Compose([
-        standard_transforms.Resize((imgsize, imgsize), interpolation=Image.ANTIALIAS),
-        standard_transforms.ToTensor(),
-        standard_transforms.Normalize(*mean_std)
-        ])
-    transform_draw = standard_transforms.Compose([
-        standard_transforms.Resize((imgsize,imgsize), interpolation=Image.ANTIALIAS),
-        standard_transforms.Pad((1, 1))
-    ])
-
-def final_evaluate( net, train_args):
-    Dataroot = '/ssd_scratch/cvit/jobinkv' #location of data
-    tes_set = doc.DOCW('test',Dataroot)
-    k = 0
-    #font = ImageFont.truetype("arial.ttf", 16)
-    if not os.path.exists(args.dataset+'Out'):
-        os.makedirs(args.dataset+'Out') 
-    if not os.path.exists(args.dataset+'Out/dis'):
-        os.makedirs(args.dataset+'Out/dis') 
-    if not os.path.exists(args.dataset+'Out/glo'):
-        os.makedirs(args.dataset+'Out/glo') 
-    if not os.path.exists(args.dataset+'Out/org'):
-        os.makedirs(args.dataset+'Out/org')
-    if not os.path.exists(args.dataset+'Out/img'):
-        os.makedirs(args.dataset+'Out/img')
-    correct = 0
-    wrong = 0
-    LabelCnts = {key: 0 for key in doc.labelNames} 
-    #st() 
-    for data in tes_set:
-        img_path, gts  = data
-        img_name = os.path.basename(img_path)
-        #if len(args.selectedFile)>0:
-        #    temp_name = doc.labelNames[gts]+'_'+doc.labelNames[gts]+'_'+img_name+'\n'
-        #    if temp_name not in selecteDList :
-        #        continue
-        #print (img_name)
-        #mean_std =([0.9584, 0.9588, 0.9586], [0.1246, 0.1223, 0.1224])
-        scrip_multiscale = extended_transforms.multiscaleImg(384,[100,40,80,160])
-        if train_args['dataset'] == 'script':
-            img_clr = Image.open(img_path).convert('RGB') 
-            img = Image.open(img_path).convert('L').convert('RGB')
-            img_avg = img_average(img)
-            #if random.random()>0.5:
-            imgI = ImageOps.invert(img)
-            imgI_avg = img_average(imgI)
-            if imgI_avg>=img_avg:
-                 img = imgI
-            img_pad = scrip_multiscale(img)
-            img_colr = np.array(img_pad)
-        else:
-            img = Image.open(img_path).convert('RGB')
-            img_temp = img.convert('L').convert('RGB')
-            img_colr = np.array(img_temp)
-            img_colr = cv2.resize(img_colr,(384,384))
-            img_pad = transform_draw(img)
-        img_tensor = transform_test(img_pad)
-        img_tensor = img_tensor.unsqueeze(0)
-        #out, indices,colorMap_p ,colorMap_g, colorMap_e, out1 = net(img_tensor.cuda()) #inputs.cuda()
-        out1, out2, out3, out4, indices = net(img_tensor.cuda()) #inputs.cuda()
-        out = out1*train_args['gama'] + out2*train_args['beta'] + 0.1 * out3 *train_args['beta'] + out4* train_args['alpha']
-        #     preds = out.squeeze().data.max(1)[1]
-        predictions = out.squeeze().data.max(0)[1].detach().cpu().numpy()
-        if predictions == gts:
-            correct+=1
-        else:
-            wrong+=1
-    print ('Accuracy = ', str(correct*100/(correct+wrong)) )
-    print ('Correct = ', str(correct) )
-    print ('Wrong = ', str(wrong) )
-    print ('Total = ', str(correct+wrong) )
-        #ploteIt(out1,predictions)
-        #if predictions != gts:
-        #    print ('gone')
-        #    continue
-
-        #LabelCnts[doc.labelNames[gts]]+=1
-        #if LabelCnts[doc.labelNames[gts]]>6:
-        #    continue
-        #out_p = threed2Img(weight_p,img_colr)
-        #out_g = threed2Img(weight_g,img_colr)
-        #out_e = threed2Img(colorMap_e,img_colr)
-        #fileName = doc.labelNames[gts]+'_'+doc.labelNames[predictions]+'_'+img_name
-        #fileName = fileName.replace(' ', '')
-        #st()
-        #img_clr.save(args.dataset+'Out/img/'+fileName, "JPEG") 
-        #img_pad.save(args.dataset+'Out/org/'+fileName, "JPEG") 
-        #out_p.save(args.dataset+'Out/dis/'+fileName, "JPEG") 
-
-
-
-
-
-
-
-
-    acc=0
-    no_imgs = 0
-    test_loss = AverageMeter()
-    confusion_matrix = torch.zeros(doc.num_classes,doc.num_classes)
-    net.eval()
-    gts_all, predictions_all = [], []
-    for vi, data in enumerate(data_loader):
-        inputs, gts = data
-        N = inputs.size(0)
-        with torch.no_grad():
-                inputs = inputs.cuda()
-                gts = gts.cuda()
-                if 'l' in train_args['features']: # loss sum
-                    out1, out2, out3, out4, indices = net(inputs)
-                    out = out1*train_args['gama'] + out2*train_args['beta'] + 0.1 * out3 *train_args['beta'] + out4* train_args['alpha']
-  
-                    preds = out.squeeze().data.max(1)[1]
-                elif  train_args['finetune']==0 or train_args['finetune']==3: # basemodel train
-                    out = net(inputs)
-                    preds = out.squeeze().data.max(1)[1]
-                else: # concatination
-                    out, _ = net(inputs)
-                    preds = out.squeeze().data.max(1)[1]
-                tempss = gts.data
-                #test_loss.update(criterion(out, gts).item(), N)
-                for t, p in zip(tempss,preds):
-                    confusion_matrix[t.long(), p.long()] += 1
-                st()
-    sep_acc = confusion_matrix.diag()/confusion_matrix.sum(1)
-    sep_acc = sep_acc.tolist()
-    mean_acc = confusion_matrix.diag().sum()/confusion_matrix.sum()
-    sep_acc.append(mean_acc.numpy())
-    return  test_loss.avg, mean_acc.numpy(), sep_acc
-'''
 if __name__ == '__main__':
     main(args)
