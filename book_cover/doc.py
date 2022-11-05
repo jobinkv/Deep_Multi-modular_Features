@@ -1,9 +1,5 @@
 import os
-import ipdb
-import numpy as np
-import scipy.io as sio
-import torch
-from PIL import Image, ImageOps
+from PIL import Image
 from torch.utils import data
 
 num_classes = 30
