@@ -39,7 +39,7 @@ from pytorch_metric_learning.utils.accuracy_calculator import AccuracyCalculator
 #sys.stdout = f
 
 
-parser = argparse.ArgumentParser(description='Train document image segmentation')
+parser = argparse.ArgumentParser(description='Train deep multimodular features for documents')
 parser.add_argument('-e','--exp', type=str, default='exp1',
                     help='name of output folder')
 parser.add_argument('-d','--dataset', type=str, default='rvl_cdip',
