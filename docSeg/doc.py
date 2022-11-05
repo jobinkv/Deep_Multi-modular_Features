@@ -1,17 +1,6 @@
 import os
-import math 
-import ipdb
-import numpy as np
-import scipy.io as sio
-import torch
-import cv2
 from PIL import Image
-import torch.nn as nn
-import copy 
 from torch.utils import data
-import torchvision.transforms as standard_transforms
-from utils import transforms as extended_transforms
-from sklearn import preprocessing
 ignore_label = 255
 num_classes = 28
 palette = [0,0,0, 255,0,0, 0,255,0, 0,0,255, 255,0,255, 0,255,255, 255,255,0, 0,125,0, 125,0,0]

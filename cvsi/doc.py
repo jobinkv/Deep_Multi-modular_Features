@@ -1,8 +1,4 @@
 import os
-import ipdb
-import numpy as np
-import scipy.io as sio
-import torch
 from PIL import Image, ImageOps
 from torch.utils import data
 import random

@@ -1,9 +1,8 @@
 import random
-
 import numpy as np
 from skimage.filters import gaussian
 import torch
-from PIL import Image, ImageFilter
+from PIL import Image
 
 
 class RandomVerticalFlip(object):
