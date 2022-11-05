@@ -3,7 +3,6 @@ from subprocess import call
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import ipdb
 
 header="""<!DOCTYPE html>
 <html>
@@ -56,7 +55,6 @@ tail="""
 def getHtmlTable(sep_iu,args):
         out=' '
         for item in sep_iu:
-                #out=out+'<tr><td><a href=./'+args['jobid']+'/'+str(item[0])+'>'+ str(item[0])+'</a></td>'
                 out=out+'<tr><td><a href=/cgi-bin/slide_view/s4m.py?exp='+args['jobid']+'&it='+str(item[0])+'>'+ str(item[0])+'</a></td>'
                 for i in range(1,len(item)):
                         out=out+'<td> '+str(round(item[i]*100, 2))+'%</td>'
