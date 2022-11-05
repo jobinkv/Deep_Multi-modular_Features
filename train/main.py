@@ -217,7 +217,6 @@ def main(train_args):
     else:
         mean_std = ([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
 
-    val_simul_transform = simul_transforms.Scale(train_args['input_size'])
     if train_args['dataset'] == 'script':
         train_input_transform = standard_transforms.Compose([
             extended_transforms.multiscaleImg(train_args['input_size'],[100,40,80,160]),
@@ -289,8 +288,6 @@ def train(train_loader, net, criterion, optimizer, curr_epoch, train_args, val_l
     plot_losses_trainD = []
     plot_losses_trainE = []
     plot_losses_test = []
-    plot_losses_val=[]
-    plot_losses_aux=[]
     plot_lr=[]
     plot_accuracy=[]
     print ('first max iter: ', train_args['max_iter'], len(train_loader))
@@ -315,12 +312,7 @@ def train(train_loader, net, criterion, optimizer, curr_epoch, train_args, val_l
             optimizer.zero_grad()
             if 'l' in train_args['features']:
                 out1, out2, out3, out4, indices = net(inputs)
-                #ipdb.set_trace()
-                embeddings  = torch.cat((out1, out2, out3, out4),1)
-                #indices_tuple = mining_func(embeddings, labels)
-                #loss = metric_loss(embeddings,labels,indices_tuple)
                 out = out1*train_args['gama'] + out2*train_args['beta'] + 0.1 * out3 *train_args['beta'] + out4* train_args['alpha']
-  
                 preds = out.squeeze().data.max(1)[1]
                 loss1 = criterion(out1, labels)
                 loss21 = criterion(out2, labels)

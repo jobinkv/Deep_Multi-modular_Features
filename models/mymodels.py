@@ -1,12 +1,8 @@
 import torch
-import torch.nn.functional as F
 from torch import nn
-from torchvision import models
-import ipdb
 import numpy as np
 import math
 from utils import initialize_weights
-from utils.misc import Conv2dDeformable
 
 def spatial_pyramid_pool(previous_conv, out_pool_size):
     num_sample = previous_conv.size(0)

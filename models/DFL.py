@@ -139,25 +139,6 @@ class DFLTEN_ResNetConC_all(nn.Module):
                 # Side-branch
                 self.cross_channel_pool = nn.AvgPool1d(kernel_size = k, stride = k, padding = 0)
                 # encoding branch
-                n_codes = self.gmms
-                compres_dim = self.dataC
-                #self.enco = nn.Sequential(
-                #  nn.BatchNorm2d(k * nclass),
-                #  nn.ReLU(inplace=True),
-                #  encoding.nn.Encoding(D=k * nclass,K=n_codes),
-                #  encoding.nn.View(-1, k * nclass * n_codes),
-                #  encoding.nn.Normalize(),
-                #  nn.Linear(k * nclass * n_codes, nclass),
-                #)  
-                #self.enco1 = nn.Sequential(
-                #  nn.Conv2d(1024, compres_dim, 1), 
-                #  nn.BatchNorm2d(compres_dim),
-                #  nn.ReLU(inplace=True),
-                #  encoding.nn.Encoding(D=compres_dim,K=n_codes),
-                #  encoding.nn.View(-1, compres_dim*n_codes),
-                #  encoding.nn.Normalize(),
-                #  nn.Linear(compres_dim*n_codes, nclass),
-                #)  
                 self.finalConc = nn.Sequential(
                   nn.ReLU(inplace=True),
                   nn.Linear(4*nclass, nclass))
