@@ -8,9 +8,9 @@ from torch.utils.data import DataLoader
 import sys
 import torch.nn as nn
 sys.path.insert(0, '../')
-from utils import joint_transforms as simul_transforms
 from utils import transforms as extended_transforms
 from models import *
+from torchvision import models
 from htmlCreator import logHtml, ploteIt
 
 from utils import check_mkdir, evaluate, AverageMeter
