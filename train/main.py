@@ -1,49 +1,29 @@
-import datetime
 from  math import cos, radians
-import math
 import os
-import random
-import tensorboardX
-from ipdb import set_trace as st
-from PIL import Image, ImageOps
+from PIL import Image
 import torchvision.transforms as standard_transforms
-import torchvision.utils as vutils
-from tensorboardX import SummaryWriter
 from torch import optim
-from torch.autograd import Variable
 from torch.backends import cudnn
 from torch.utils.data import DataLoader
 import sys
 import torch.nn as nn
-#import matplotlib.ticker as ticker
-import numpy as np
-#import matplotlib
-#matplotlib.use('Agg')
-#import matplotlib.pyplot as plt
-from subprocess import call
 sys.path.insert(0, '../')
 from utils import joint_transforms as simul_transforms
 from utils import transforms as extended_transforms
 from models import *
 from htmlCreator import logHtml, ploteIt
 
-from utils import check_mkdir, evaluate, AverageMeter, CrossEntropyLoss2d
+from utils import check_mkdir, evaluate, AverageMeter
 cudnn.benchmark = True
 import argparse
-# metric learning for combining feature head
-from pytorch_metric_learning import losses, miners, reducers, testers
-from pytorch_metric_learning.utils.accuracy_calculator import AccuracyCalculator
-
-
-#f = open(os.devnull, 'w')
-#sys.stdout = f
+from pytorch_metric_learning import losses, miners
 
 
 parser = argparse.ArgumentParser(description='Train deep multimodular features for documents')
 parser.add_argument('-e','--exp', type=str, default='exp1',
                     help='name of output folder')
 parser.add_argument('-d','--dataset', type=str, default='rvl_cdip',
-                    help='choose the dataset: cvpr(9 labels) or dsse(7 labels)')
+                    help='choose the dataset: ')
 parser.add_argument('-n','--net', type=str, default='resnext101',
                     help='choose the network architecture: psp or mfcn')
 parser.add_argument('-s','--snapshot', type=str, default='',
@@ -213,10 +193,8 @@ def main(train_args):
           net.load_state_dict(torch.load(path))
           
     # metric loss
-    #metric_loss = losses.TripletMarginLoss()
     metric_loss = losses.TripletMarginLoss(margin = 0.2)
     mining_func = miners.TripletMarginMiner(margin = 0.2, type_of_triplets = "semihard")
-    #accuracy_calculator = AccuracyCalculator(include = ("mean_average_precision_at_r",), k = 10)
     print ("number of cuda devices = ", torch.cuda.device_count())
     if len(train_args['snapshot']) == 0:
         curr_epoch = 1
@@ -242,7 +220,6 @@ def main(train_args):
     val_simul_transform = simul_transforms.Scale(train_args['input_size'])
     if train_args['dataset'] == 'script':
         train_input_transform = standard_transforms.Compose([
-            #extended_transforms.multiscaleImg(train_args['input_size'],[100,120,80,70,50,20,10]),
             extended_transforms.multiscaleImg(train_args['input_size'],[100,40,80,160]),
             standard_transforms.Resize((train_args['input_size'], train_args['input_size']), interpolation=Image.Resampling.LANCZOS),
             extended_transforms.RandomGaussianBlur(),
@@ -284,20 +261,10 @@ def main(train_args):
     check_mkdir(os.path.join(ckpt_path, exp_name))
     # train the network
     train(train_loader, net, criterion, optimizer, curr_epoch, train_args, val_loader,tes_loader, metric_loss,mining_func)
-    bestFileName = getBestModel(os.path.join(ckpt_path, exp_name))
-    # test optional
-    #ipdb.set_trace()
+
     test_loss, test_acc,clas_acc = final_evaluate(tes_loader, net,criterion,train_args)
     print ('Final accuracy', str(clas_acc))
-    '''
-    if '.pth' in bestFileName: 
-        call(["scp", os.path.join(ckpt_path, exp_name,bestFileName), "jobinkv@10.2.16.142:/mnt/4/ijdarTrainedModels/"])
-        print ('The file ', os.path.join(ckpt_path, exp_name,bestFileName))
-        print (' copied to jobinkv@10.2.16.142:/mnt/4/ijdarTrainedModels/')
-        print (' ssh jobinkv@10.2.16.142 ls /mnt/4/ijdarTrainedModels/')
-    else:
-        print ('File not found') 
-    '''
+
 def getBestModel(path, splitingChar = '_', ComparePos = 5):
     Imagelist= os.listdir(path)
     accuracy = 0
