@@ -216,7 +216,7 @@ def main(train_args):
     #metric_loss = losses.TripletMarginLoss()
     metric_loss = losses.TripletMarginLoss(margin = 0.2)
     mining_func = miners.TripletMarginMiner(margin = 0.2, type_of_triplets = "semihard")
-    accuracy_calculator = AccuracyCalculator(include = ("mean_average_precision_at_r",), k = 10)
+    #accuracy_calculator = AccuracyCalculator(include = ("mean_average_precision_at_r",), k = 10)
     print ("number of cuda devices = ", torch.cuda.device_count())
     if len(train_args['snapshot']) == 0:
         curr_epoch = 1
