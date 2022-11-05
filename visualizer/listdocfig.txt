@@ -1,0 +1,14 @@
+Box plot_Box plot_boxP_139.png
+Graph plots_Graph plots_2011_05995645-Figure4-1subFig-10.png
+Venn Diagram_Venn Diagram_venD_428.png
+Bubble Chart_Bubble Chart_bubleP_229.jpg
+Pie chart_Pie chart_pieChart_225.png
+Tree Diagram_Tree Diagram_treeD_242.png
+Confusion matrix_Confusion matrix_2010_05539883-Figure4-1subFig-1.png
+Pareto charts_Pareto charts_paretoC_216.jpg
+Bar plots_Bar plots_2012_06248036-Figure5-1subFig-1.png
+Pareto charts_Pareto charts_paretoC_245.png
+Polar plot_Polar plot_polarP_139.png
+3D objects_3D objects_2009_05206603-Figure8-1subFig-4.png
+Block diagram_Block diagram_2015_07298673-Figure5-1subFig-4.png
+Geographic map_Geographic map_gMap_437.jpg
