@@ -244,7 +244,7 @@ def main(train_args):
         train_input_transform = standard_transforms.Compose([
             #extended_transforms.multiscaleImg(train_args['input_size'],[100,120,80,70,50,20,10]),
             extended_transforms.multiscaleImg(train_args['input_size'],[100,40,80,160]),
-            standard_transforms.Resize((train_args['input_size'], train_args['input_size']), interpolation=Image.ANTIALIAS),
+            standard_transforms.Resize((train_args['input_size'], train_args['input_size']), interpolation=Image.Resampling.LANCZOS),
             extended_transforms.RandomGaussianBlur(),
             standard_transforms.ToTensor(),
             standard_transforms.Normalize(*mean_std)
