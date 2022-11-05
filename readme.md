@@ -23,19 +23,46 @@ Texture or repeating patterns, discriminative patches, and shapes are the salien
 
 ## Pytorch Implementation
 ### Installation
-Clone this repository.
 ```
-git clone https://github.com/jobinkv/Deep_Multi-modular_Features.git
-cd Deep_Multi-modular_Features
-```
-Install following packages.
-```
-conda create --name dmmf python=3.6
+conda create --name dmmf python=3.8
 conda activate dmmf
 conda install -y pytorch=1.4.0 torchvision=0.5.0 cudatoolkit=10.1 -c pytorch
+```
+
+install pytorch encoding from [here](https://hangzhang.org/PyTorch-Encoding/notes/compile.html)
+<br>
+To check the installation of pytorch encoding
+<br>
+run in python console
+```
+import encoding
+```
+
+Install following packages.
+```
 conda install scipy==1.4.1
 conda install tqdm==4.46.0
 conda install scikit-image==0.16.2
 pip install tensorboardX==2.0
 pip install thop
+
+git clone https://github.com/jobinkv/Deep_Multi-modular_Features.git
+cd Deep_Multi-modular_Features
+```
+
+
+
+=====END=========
+```
+
+
+
+module load u18/cudnn/8.3.3-cuda-10.2 u18/cuda/10.2
+conda activate slide
+conda install pytorch==1.8.0 torchvision==0.9.0 torchaudio==0.8.0 cudatoolkit=10.2 -c pytorch
+pip install git+https://github.com/openai/CLIP.git
+python -m pip install detectron2 -f \
+  https://dl.fbaipublicfiles.com/detectron2/wheels/cu102/torch1.8/index.html
+
+
 ```
