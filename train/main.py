@@ -507,11 +507,6 @@ def final_evaluate(data_loader, net, criterion,train_args):
                 test_loss.update(criterion(out, gts).item(), N)
                 for t, p, img_path in zip(tempss,preds,paths):
                     confusion_matrix[t.long(), p.long()] += 1
-                    if t!=p:
-                        imgName = doc.labelNames[t]+'-->'+doc.labelNames[p]+'.jpg'       
-                        org_img = Image.open(img_path).convert('RGB')
-                        org_img.save(imgName)
-                #st()
     sep_acc = confusion_matrix.diag()/confusion_matrix.sum(1)
     sep_acc = sep_acc.tolist()
     mean_acc = confusion_matrix.diag().sum()/confusion_matrix.sum()
