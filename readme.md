@@ -44,7 +44,13 @@ git clone https://github.com/jobinkv/Deep_Multi-modular_Features.git
 cd Deep_Multi-modular_Features
 ```
 
+### The datasets
+We use four different datasets 
 
++ RVL-CDIP dataset [link](https://adamharley.com/rvl-cdip/)
++ DocFigure dataset [link](http://cvit.iiit.ac.in/usodi/Docfig.php)
++ Book cover dataset [link](https://github.com/uchidalab/book-dataset)
++ CVSI dataset [link](http://www.ict.griffith.edu.au/cvsi2015/Dataset.php)
 
 =====END=========
 
