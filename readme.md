@@ -38,14 +38,8 @@ run in python console
 import encoding
 ```
 
-Install following packages.
+After installing encoding, clone this repo
 ```
-conda install scipy==1.4.1
-conda install tqdm==4.46.0
-conda install scikit-image==0.16.2
-pip install tensorboardX==2.0
-pip install thop
-
 git clone https://github.com/jobinkv/Deep_Multi-modular_Features.git
 cd Deep_Multi-modular_Features
 ```
