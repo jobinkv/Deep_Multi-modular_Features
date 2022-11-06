@@ -55,6 +55,8 @@ We use four different datasets
 
 ### Trained model
 + Script classification [link](https://iiitaphyd-my.sharepoint.com/:u:/g/personal/jobin_kv_research_iiit_ac_in/ESrA2swurhRDgZt7LAuP6GQBGw6uu9ula0t4hNjB2z9jsA?e=3jD1ig)
-+ 
++ Book cover [link](https://iiitaphyd-my.sharepoint.com/:u:/g/personal/jobin_kv_research_iiit_ac_in/EQ1AAjN5P21Du-kRBbCEQjYBu4zIQ4n1ZWeWNjthn9xkug?e=tQVhKU)
++ Docfigure [link](https://iiitaphyd-my.sharepoint.com/:u:/g/personal/jobin_kv_research_iiit_ac_in/EYe6eejq2FhLjv8qNVoWxgwBK9aNs-aJgqem1ty6lb9-Zg?e=Kcc8GU)
++ rvl-cdip [link](https://iiitaphyd-my.sharepoint.com/:u:/g/personal/jobin_kv_research_iiit_ac_in/EY9ktEKwWxJKjCRg87YM0NUBS1X5or5bmbJb5jp_f8vCTQ?e=qiKp0d)
 =====END=========
 

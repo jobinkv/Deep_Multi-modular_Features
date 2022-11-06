@@ -103,15 +103,6 @@ class DOCW(data.Dataset):
 
        
     def __getitem__(self, index):
-                 
-        #img_path, label = self.imgs[index]
-        #img = Image.open(img_path).convert('L').convert('RGB')
-        #if random.random()>0.5:
-        #    img = ImageOps.invert(img)
-        #if self.transform is not None:
-        #        img = self.transform(img)
-                
-                
         return self.imgs[index]
 
     def __len__(self):
