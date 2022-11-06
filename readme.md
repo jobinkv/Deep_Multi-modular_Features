@@ -52,5 +52,9 @@ We use four different datasets
 + Book cover dataset [link](https://github.com/uchidalab/book-dataset)
 + CVSI dataset [link](http://www.ict.griffith.edu.au/cvsi2015/Dataset.php)
 
+
+### Trained model
++ Script classification [link](https://iiitaphyd-my.sharepoint.com/:u:/g/personal/jobin_kv_research_iiit_ac_in/ESrA2swurhRDgZt7LAuP6GQBGw6uu9ula0t4hNjB2z9jsA?e=3jD1ig)
++ 
 =====END=========
 
