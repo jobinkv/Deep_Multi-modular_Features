@@ -53,16 +53,4 @@ cd Deep_Multi-modular_Features
 
 
 =====END=========
-```
 
-
-
-module load u18/cudnn/8.3.3-cuda-10.2 u18/cuda/10.2
-conda activate slide
-conda install pytorch==1.8.0 torchvision==0.9.0 torchaudio==0.8.0 cudatoolkit=10.2 -c pytorch
-pip install git+https://github.com/openai/CLIP.git
-python -m pip install detectron2 -f \
-  https://dl.fbaipublicfiles.com/detectron2/wheels/cu102/torch1.8/index.html
-
-
-```
