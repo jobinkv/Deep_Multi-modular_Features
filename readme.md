@@ -78,5 +78,6 @@ python eval.py -d 'script' -e exp1
      -f 'gedl' -n 'resnext101' 
     -t 2 -l 0.0001  -k 20 -g 16 -c 256 
 ```
+
 =====END=========
 
