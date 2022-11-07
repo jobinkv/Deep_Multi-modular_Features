@@ -5,7 +5,7 @@ import torchvision
 import sys
 sys.path.insert(0, '../')
 from utils import initialize_weights
-#import encoding
+import encoding
 import ipdb
 
 
