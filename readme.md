@@ -58,5 +58,25 @@ We use four different datasets
 + Book cover [link](https://iiitaphyd-my.sharepoint.com/:u:/g/personal/jobin_kv_research_iiit_ac_in/EQ1AAjN5P21Du-kRBbCEQjYBu4zIQ4n1ZWeWNjthn9xkug?e=tQVhKU)
 + Docfigure [link](https://iiitaphyd-my.sharepoint.com/:u:/g/personal/jobin_kv_research_iiit_ac_in/EYe6eejq2FhLjv8qNVoWxgwBK9aNs-aJgqem1ty6lb9-Zg?e=Kcc8GU)
 + rvl-cdip [link](https://iiitaphyd-my.sharepoint.com/:u:/g/personal/jobin_kv_research_iiit_ac_in/EY9ktEKwWxJKjCRg87YM0NUBS1X5or5bmbJb5jp_f8vCTQ?e=qiKp0d)
+
+
+### Train
+
+```
+cd tools/
+python train.py -d 'script' -e exp1
+     -f 'gedl' -n 'resnext101' 
+    -t 2 -l 0.0001  -k 20 -g 16 -c 256 
+    --totalEppoch 40 
+```
+
+### Evaluate
+
+```
+cd tools/
+python eval.py -d 'script' -e exp1
+     -f 'gedl' -n 'resnext101' 
+    -t 2 -l 0.0001  -k 20 -g 16 -c 256 
+```
 =====END=========
 
